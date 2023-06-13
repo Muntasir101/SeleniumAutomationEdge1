@@ -22,9 +22,6 @@ def launch_website(browser_name, url):
         except Exception as e:
             print("Failed to launch.Invalid URL: %s" % url)
 
-        finally:
-            driver.quit()
-
     except Exception as e:
         print("Exception Type: ", type(e).__name__)
 
@@ -33,6 +30,7 @@ launch_website("Chrome", "http://google.com")
 launch_website("firefox", "http://google.com")
 launch_website("edge", "http://google.com")
 """
+
 
 browser_list = ['chrome']
 
