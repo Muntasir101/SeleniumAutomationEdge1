@@ -7,7 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
 
 
-def test_fund_transfer():
+def test_fund_transfer(account_type, transfer_type, amount, expected_amount):
     # Step 1: Browser Launch
     driver = webdriver.Chrome()
     driver.maximize_window()
@@ -20,19 +20,80 @@ def test_fund_transfer():
         print("Fund Transfer Open Successfully.")
 
         try:
-            # Step 3: Find Username
+            # Step 3: Find Account
             account_field = WebDriverWait(driver, 10, poll_frequency=3).until(
                 EC.visibility_of_element_located((By.CSS_SELECTOR, "#account_type")))
             # Step 4: Select Account
             account_options = Select(account_field)
-            account_options.select_by_value("current")
-            time.sleep(10)
+            if account_type == "savings":
+                account_options.select_by_value("savings")
+            print(f"{account_type} Select Successfully.")
+            if account_type == "current":
+                account_options.select_by_value("current")
+            print(f"{account_type} Select Successfully.")
 
         except Exception as e:
             print("Account Field Exception:", type(e).__name__)
 
+        try:
+            # Step 5: Find Transfer Type
+            transfer_type_field = WebDriverWait(driver, 10, poll_frequency=3).until(
+                EC.visibility_of_element_located((By.CSS_SELECTOR, "#transfer_type")))
+            # Step 6: Select Transfer Type
+            transfer_type_field = Select(transfer_type_field)
+
+            if transfer_type == "standard":
+                transfer_type_field.select_by_value("standard")
+            print(f"{transfer_type} Select Successfully.")
+            if account_type == "express":
+                transfer_type_field.select_by_value("express")
+            print(f"{transfer_type} Select Successfully.")
+            if account_type == "international":
+                transfer_type_field.select_by_value("international")
+            print(f"{transfer_type} Select Successfully.")
+
+        except Exception as e:
+            print("Transfer Type Field Exception:", type(e).__name__)
+
+        try:
+            # Step 7: Find Transfer Amount
+            transfer_amount_field = WebDriverWait(driver, 10, poll_frequency=3).until(
+                EC.visibility_of_element_located((By.CSS_SELECTOR, "#transfer_amount")))
+            # Step 8: Enter Transfer Amount
+            transfer_amount_field.send_keys(amount)
+            print("Enter Transfer Amount Successfully.")
+
+        except Exception as e:
+            print("Transfer Amount Field Exception:", type(e).__name__)
+
+        try:
+            # Step 9: Find Transfer Button
+            transfer_button = WebDriverWait(driver, 10, poll_frequency=3).until(
+                EC.visibility_of_element_located((By.CSS_SELECTOR, ".btn-primary")))
+            # Step 10: Enter Transfer Amount
+            transfer_button.click()
+            print("Transfer Button clicked Successfully.")
+            time.sleep(3)
+
+        except Exception as e:
+            print("Transfer Button Field Exception:", type(e).__name__)
+
+        # Amount Verify
+        try:
+            # Step 11: Find Transfer Amount
+            amount_result = WebDriverWait(driver, 10, poll_frequency=3).until(
+                EC.visibility_of_element_located((By.CSS_SELECTOR, "[class] p:nth-of-type(3)")))
+
+            assert expected_amount in amount_result.text, f"Amount Mismatch"
+            print("Amount Verify Success.")
+            time.sleep(3)
+
+        except Exception as e:
+            print("Transfer Amount Result Exception:", type(e).__name__)
+
     except Exception as e:
-        print("Login page Exception:", type(e).__name__)
+        print("Fund Transfer page Exception:", type(e).__name__)
 
 
-test_fund_transfer()
+# Test case 1
+test_fund_transfer("savings", "standard", 500, "Total Amount: $502.0")
