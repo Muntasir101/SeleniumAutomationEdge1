@@ -38,6 +38,10 @@ def test_login(username, password):
         except Exception as e:
             print("Login button Exception: ", type(e).__name__)
 
+        driver.execute_script('alert("Login Success !!!");')
+        driver.get_screenshot_as_file("E:\\PnT_Edge_01\\Projects\\SeleniumAutomationEdge1\\Screenshots\\success_login"
+                                      ".png")
+
         # Verify login or not
         assert "https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index" in driver.current_url, f"Login failed."
         print("Login Successful.")
@@ -160,7 +164,8 @@ def test_login(username, password):
         # Nationality
         try:
             nationality = WebDriverWait(driver, 10).until(
-                EC.visibility_of_element_located((By.CSS_SELECTOR, "#app > div.oxd-layout > div.oxd-layout-container > div.oxd-layout-context > div > div > div > div.orangehrm-edit-employee-content > div.orangehrm-horizontal-padding.orangehrm-vertical-padding > form > div:nth-child(5) > div:nth-child(1) > div:nth-child(1) > div > div:nth-child(2) > div")))
+                EC.visibility_of_element_located((By.CSS_SELECTOR,
+                                                  "#app > div.oxd-layout > div.oxd-layout-container > div.oxd-layout-context > div > div > div > div.orangehrm-edit-employee-content > div.orangehrm-horizontal-padding.orangehrm-vertical-padding > form > div:nth-child(5) > div:nth-child(1) > div:nth-child(1) > div > div:nth-child(2) > div")))
 
             nationality.click()
             time.sleep(3)
@@ -176,7 +181,8 @@ def test_login(username, password):
         # Date of birth field
         try:
             date_of_birth_field = WebDriverWait(driver, 10, poll_frequency=2).until(
-                EC.visibility_of_element_located((By.CSS_SELECTOR, ".orangehrm-edit-employee-content .oxd-form-row:nth-child(5) [placeholder]")))
+                EC.visibility_of_element_located(
+                    (By.CSS_SELECTOR, ".orangehrm-edit-employee-content .oxd-form-row:nth-child(5) [placeholder]")))
             date_of_birth_field.send_keys(Keys.CONTROL + 'a')
             date_of_birth_field.send_keys(Keys.BACKSPACE)
             date_of_birth_field.send_keys('2020-06-15')
@@ -208,7 +214,8 @@ def test_login(username, password):
         # Smoker field
         try:
             smoker_field = WebDriverWait(driver, 10).until(
-                EC.visibility_of_element_located((By.CSS_SELECTOR, ".oxd-input-field-bottom-space.oxd-input-group  .oxd-checkbox-wrapper")))
+                EC.visibility_of_element_located(
+                    (By.CSS_SELECTOR, ".oxd-input-field-bottom-space.oxd-input-group  .oxd-checkbox-wrapper")))
             print(smoker_field.is_displayed())
             smoker_field.click()
             time.sleep(5)
@@ -220,6 +227,9 @@ def test_login(username, password):
         print("Login page Exception: ", type(e).__name__)
 
     time.sleep(5)
+
+    element_text = driver.find_element(By.CSS_SELECTOR, ".login-form > .text-center.title > b").text
+    assert "ENTER ACCOUNT INFORMATION" in element_text
 
 
 test_login("Admin", "admin123")
