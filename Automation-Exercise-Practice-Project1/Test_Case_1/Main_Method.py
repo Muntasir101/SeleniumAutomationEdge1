@@ -23,11 +23,11 @@ from After_Account_Deletion_Page.Verify_Account_Deletion import handle_account_d
 from After_Account_Deletion_Page.Continue_Button import handle_continue_btn_click
 
 
-def complete_tasks(url):
+def complete_tasks_after_test_case1(url):
     # verifying if homepage is visible or not
     try:
         driver.get(url)
-        assert "https://automationexercise.com/" in driver.current_url, f"Homepage URL mismatched1"
+        assert url in driver.current_url, f"Homepage URL mismatched!"
         print("Homepage is successfully loaded!")
 
         # this function handles admin sign-in
@@ -84,4 +84,4 @@ def complete_tasks(url):
         print("Homepage URL exception: ", type(e).__name__)
 
 
-complete_tasks("https://automationexercise.com")
+complete_tasks_after_test_case1("https://automationexercise.com")
