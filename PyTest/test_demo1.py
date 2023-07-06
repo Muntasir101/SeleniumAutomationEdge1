@@ -1,6 +1,8 @@
 import pytest
 
 
+@pytest.mark.smoke
+
 def test_case1():
     print("Test case 1 Executed successfully")
 
