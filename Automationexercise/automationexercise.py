@@ -275,16 +275,6 @@ def test_login(name, email):
         except Exception as e:
             print("Verify that 'Logged in as username' Exception: ", type(e).__name__)
 
-        # # First Name
-        # try:
-        #     firstname_field = WebDriverWait(driver, 10, poll_frequency=2).until(
-        #         EC.visibility_of_element_located((By.CSS_SELECTOR, "[name='firstName']")))
-        #     firstname_field.send_keys(Keys.CONTROL + 'a')
-        #     firstname_field.send_keys(Keys.BACKSPACE)
-        #     firstname_field.send_keys('Johan')
-        # except Exception as e:
-        #     print("Firstname field Exception: ", type(e).__name__)
-
         time.sleep(3)
 
     except Exception as e:
